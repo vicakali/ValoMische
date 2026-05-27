@@ -1,0 +1,285 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+    color: #e0e0e0;
+    min-height: 100vh;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #0f1419;
+    border-bottom: 3px solid #ff4655;
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar-title {
+    color: #ff4655;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.navbar-controls {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-group label {
+    font-weight: bold;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.control-group select,
+.control-group input {
+    padding: 8px 12px;
+    background-color: #1a1f3a;
+    color: #fff;
+    border: 2px solid #ff4655;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.control-group select:hover,
+.control-group input:hover {
+    border-color: #ffb81d;
+    background-color: #232b44;
+}
+
+.control-group select:focus,
+.control-group input:focus {
+    outline: none;
+    border-color: #ffb81d;
+    box-shadow: 0 0 8px rgba(255, 184, 29, 0.5);
+}
+
+.generate-btn {
+    padding: 10px 30px;
+    background-color: #ff4655;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.generate-btn:hover {
+    background-color: #ffb81d;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 70, 85, 0.4);
+}
+
+.generate-btn:active {
+    transform: translateY(0);
+}
+
+/* Main Container */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Map Display */
+.map-display {
+    background-color: rgba(255, 70, 85, 0.1);
+    border: 2px solid #ff4655;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.map-display h2 {
+    font-size: 24px;
+    color: #ffb81d;
+}
+
+/* Team Display */
+.team-display {
+    margin-bottom: 40px;
+}
+
+.team-display h2 {
+    font-size: 24px;
+    color: #ffb81d;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.agent-card {
+    background: linear-gradient(135deg, #1a1f3a 0%, #232b44 100%);
+    border: 2px solid #ff4655;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.agent-card:hover {
+    transform: translateY(-5px);
+    border-color: #ffb81d;
+    box-shadow: 0 8px 20px rgba(255, 184, 29, 0.3);
+}
+
+.agent-card.duelist {
+    border-left: 4px solid #ff4655;
+}
+
+.agent-card.initiator {
+    border-left: 4px solid #ffb81d;
+}
+
+.agent-card.controller {
+    border-left: 4px solid #0099ff;
+}
+
+.agent-card.sentinel {
+    border-left: 4px solid #00d47f;
+}
+
+.agent-role {
+    font-size: 12px;
+    color: #ffb81d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.agent-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.agent-abilities {
+    font-size: 12px;
+    color: #b0b0b0;
+    line-height: 1.6;
+}
+
+/* Analysis Display */
+.analysis-display {
+    background-color: rgba(0, 153, 255, 0.1);
+    border: 2px solid #0099ff;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.analysis-display h2 {
+    color: #0099ff;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.analysis-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.analysis-item {
+    background-color: rgba(15, 20, 25, 0.7);
+    border-left: 4px solid #0099ff;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.analysis-item h3 {
+    color: #ffb81d;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.analysis-item p {
+    color: #b0b0b0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.empty-state p {
+    font-size: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .control-group {
+        flex-direction: column;
+    }
+
+    .control-group select,
+    .control-group input {
+        width: 100%;
+    }
+
+    .generate-btn {
+        width: 100%;
+    }
+
+    .team-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .navbar-title {
+        font-size: 20px;
+    }
+
+    .analysis-content {
+        grid-template-columns: 1fr;
+    }
+}
