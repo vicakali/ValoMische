@@ -80,11 +80,60 @@ const generateBtn = document.getElementById('generateBtn');
 const selectedMapSpan = document.getElementById('selectedMap');
 const teamGrid = document.getElementById('teamGrid');
 const analysisContent = document.getElementById('analysisContent');
+const videoIntroOverlay = document.getElementById('videoIntroOverlay');
+
+// Modal Elements
+const impressumModal = document.getElementById('impressum-modal');
+const datenschutzModal = document.getElementById('datenschutz-modal');
+const impressumLink = document.querySelector('.impressum-link');
+const datenschutzLink = document.querySelector('.datenschutz-link');
+const closeModals = document.querySelectorAll('.close-modal');
 
 // Event Listeners
 generateBtn.addEventListener('click', generateTeam);
 mapSelect.addEventListener('change', updateMapDisplay);
 compTypeSelect.addEventListener('change', () => {});
+
+// Video Intro Skip
+videoIntroOverlay.addEventListener('click', skipVideo);
+
+// Modal Event Listeners
+impressumLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal(impressumModal);
+});
+
+datenschutzLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal(datenschutzModal);
+});
+
+closeModals.forEach(closeBtn => {
+    closeBtn.addEventListener('click', (e) => {
+        closeModal(e.target.closest('.modal'));
+    });
+});
+
+// Close modal when clicking outside
+window.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal')) {
+        closeModal(e.target);
+    }
+});
+
+// Modal Functions
+function openModal(modal) {
+    modal.classList.add('show');
+}
+
+function closeModal(modal) {
+    modal.classList.remove('show');
+}
+
+// Skip Video Function
+function skipVideo() {
+    videoIntroOverlay.classList.add('hidden');
+}
 
 // Update Map Display
 function updateMapDisplay() {
