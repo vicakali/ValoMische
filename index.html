@@ -7,75 +7,227 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <h1 class="navbar-title">Valorant Team Comp Generator</h1>
-            <div class="navbar-controls">
-                <!-- Map Selection -->
-                <div class="control-group">
-                    <label for="mapSelect">Map:</label>
-                    <select id="mapSelect">
-                        <option value="random">Random</option>
-                        <option value="haven">Haven</option>
-                        <option value="split">Split</option>
-                        <option value="ascent">Ascent</option>
-                        <option value="lotus">Lotus</option>
-                        <option value="pearl">Pearl</option>
-                        <option value="icebox">Icebox</option>
-                        <option value="breeze">Breeze</option>
-                        <option value="sunset">Sunset</option>
-                        <option value="fracture">Fracture</option>
-                    </select>
-                </div>
+    <!-- YouTube Video Intro Overlay -->
+    <div id="videoIntroOverlay" class="video-intro-overlay">
+        <div class="video-intro-container">
+            <iframe 
+                id="trailerVideo"
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube-nocookie.com/embed/FUoqAn5T4h4?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&start=20&end=32" 
+                frameborder="0" 
+                allow="autoplay"
+                allowfullscreen>
+            </iframe>
+            <div class="video-skip-hint">Click anywhere to skip</div>
+        </div>
+    </div>
 
-                <!-- Team Comp Type -->
-                <div class="control-group">
-                    <label for="compTypeSelect">Team Comp Type:</label>
-                    <select id="compTypeSelect">
-                        <option value="balanced">Balanced</option>
-                        <option value="aggressive">Aggressive</option>
-                        <option value="defensive">Defensive</option>
-                        <option value="utility-heavy">Utility Heavy</option>
-                        <option value="random">Random</option>
-                    </select>
-                </div>
-
-                <!-- Excluded Agents -->
-                <div class="control-group">
-                    <label for="excludedAgents">Exclude Agents:</label>
-                    <input type="text" id="excludedAgents" placeholder="e.g., Jett, Sage">
-                </div>
-
-                <!-- Generate Button -->
-                <button id="generateBtn" class="generate-btn">Generate Team</button>
+    <!-- Start Screen -->
+    <div id="startScreen" class="screen active">
+        <div class="start-container">
+            <h1 class="start-title">Valorant Team Comp Generator</h1>
+            <p class="start-subtitle">Choose your play style</p>
+            <div class="start-buttons">
+                <button id="soloBtn" class="mode-btn solo-btn">
+                    <div class="mode-icon">👤</div>
+                    <div class="mode-text">Solo</div>
+                    <div class="mode-desc">Generate 1 random agent</div>
+                </button>
+                <button id="teamBtn" class="mode-btn team-btn">
+                    <div class="mode-icon">👥</div>
+                    <div class="mode-text">Team</div>
+                    <div class="mode-desc">Generate 5 random agents</div>
+                </button>
             </div>
         </div>
-    </nav>
+    </div>
 
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Map Display -->
-        <div id="mapDisplay" class="map-display">
-            <h2>Map: <span id="selectedMap">Not Selected</span></h2>
-        </div>
+    <!-- Quick Generate Screen -->
+    <div id="quickScreen" class="screen">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <h1 class="navbar-title">Valorant Team Comp Generator</h1>
+                <div class="navbar-controls">
+                    <!-- Map Selection -->
+                    <div class="control-group">
+                        <label for="mapSelect">Map:</label>
+                        <select id="mapSelect">
+                            <option value="random">Random</option>
+                        </select>
+                    </div>
 
-        <!-- Team Composition Display -->
-        <div id="teamDisplay" class="team-display">
-            <h2>Your Team Composition</h2>
-            <div id="teamGrid" class="team-grid">
-                <!-- Team members will be inserted here -->
+                    <!-- Team Comp Type -->
+                    <div class="control-group">
+                        <label for="compTypeSelect">Team Comp Type:</label>
+                        <select id="compTypeSelect">
+                            <option value="balanced">Balanced</option>
+                            <option value="aggressive">Aggressive</option>
+                            <option value="defensive">Defensive</option>
+                            <option value="utility-heavy">Utility Heavy</option>
+                            <option value="random">Random</option>
+                        </select>
+                    </div>
+
+                    <!-- Excluded Agents -->
+                    <div class="control-group">
+                        <label for="excludedAgents">Exclude Agents:</label>
+                        <input type="text" id="excludedAgents" placeholder="e.g., Jett, Sage">
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button id="generateBtn" class="generate-btn">Generate Team</button>
+
+                    <!-- Navigation Buttons -->
+                    <button id="backToStartBtn" class="nav-btn back-btn">← Start</button>
+                    <button id="goToManualBtn" class="nav-btn">Manual Selection →</button>
+                </div>
             </div>
-        </div>
+        </nav>
 
-        <!-- Team Analysis -->
-        <div id="analysisDisplay" class="analysis-display">
-            <h2>Team Analysis</h2>
-            <div id="analysisContent" class="analysis-content">
-                <!-- Analysis will be inserted here -->
+        <!-- Main Content -->
+        <main class="container">
+            <!-- Map Display -->
+            <div id="mapDisplay" class="map-display">
+                <h2>Map: <span id="selectedMap">Not Selected</span></h2>
             </div>
+
+            <!-- Team Composition Display -->
+            <div id="teamDisplay" class="team-display">
+                <h2>Your Team Composition</h2>
+                <div id="teamGrid" class="team-grid">
+                    <!-- Team members will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Team Analysis -->
+            <div id="analysisDisplay" class="analysis-display">
+                <h2>Team Analysis</h2>
+                <div id="analysisContent" class="analysis-content">
+                    <!-- Analysis will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p><strong>Attribution:</strong> Chamber Trailer © Riot Games | Agent & Map Data © Riot Games</p>
+                <p>
+                    <strong>Disclaimer:</strong> This is a fan-made project and is not affiliated with, endorsed by, or created by Riot Games, Inc. 
+                    Valorant is a registered trademark of Riot Games, Inc. This project is created in compliance with Riot Games' 
+                    <a href="https://www.riotgames.com/en/legal" target="_blank">Fanwork Guidelines</a>.
+                </p>
+                <p><a href="#impressum-modal" class="impressum-link">Impressum</a> | <a href="#datenschutz-modal" class="datenschutz-link">Datenschutz</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Manual Selection Screen -->
+    <div id="manualScreen" class="screen">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <h1 class="navbar-title">Manual Selection</h1>
+                <div class="navbar-controls">
+                    <button id="backToStartBtn2" class="nav-btn back-btn">← Start</button>
+                    <button id="goToQuickBtn" class="nav-btn">← Quick Generate</button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container">
+            <!-- Maps Section -->
+            <div class="maps-section">
+                <h2>Select a Map</h2>
+                <div id="mapsGrid" class="maps-grid">
+                    <!-- Maps will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Agents Section -->
+            <div class="agents-section">
+                <div class="agents-header">
+                    <h2>Select Agents</h2>
+                    <div class="agent-controls">
+                        <button id="selectAllBtn" class="control-btn">Select All</button>
+                        <button id="deselectAllBtn" class="control-btn">Deselect All</button>
+                        <button id="generateManualBtn" class="generate-btn">Generate Team</button>
+                    </div>
+                </div>
+                <div id="agentsGrid" class="agents-grid">
+                    <!-- Agents will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Manual Team Result -->
+            <div id="manualTeamDisplay" class="team-display" style="display: none;">
+                <h2>Your Team Composition</h2>
+                <div id="manualTeamGrid" class="team-grid">
+                    <!-- Team members will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p><strong>Attribution:</strong> Chamber Trailer © Riot Games | Agent & Map Data © Riot Games</p>
+                <p>
+                    <strong>Disclaimer:</strong> This is a fan-made project and is not affiliated with, endorsed by, or created by Riot Games, Inc. 
+                    Valorant is a registered trademark of Riot Games, Inc. This project is created in compliance with Riot Games' 
+                    <a href="https://www.riotgames.com/en/legal" target="_blank">Fanwork Guidelines</a>.
+                </p>
+                <p><a href="#impressum-modal" class="impressum-link">Impressum</a> | <a href="#datenschutz-modal" class="datenschutz-link">Datenschutz</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Impressum Modal -->
+    <div id="impressum-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Impressum</h2>
+            <hr>
+            <p><strong>Verantwortlich für den Inhalt:</strong></p>
+            <p>
+                [Dein Name]<br>
+                [Deine Adresse]<br>
+                [PLZ Stadt]<br>
+                Deutschland
+            </p>
+            <p>
+                <strong>Kontakt:</strong><br>
+                E-Mail: <a href="mailto:[deine-email@example.com]">[deine-email@example.com]</a><br>
+                Telefon: [Deine Telefonnummer]
+            </p>
+            <p>
+                <strong>Haftungsausschluss:</strong><br>
+                Diese Website wird zu Zwecken der Unterhaltung zur Verfügung gestellt. 
+                Sie ist ein Fanprojekt und wird nicht von Riot Games oder verwandten Unternehmen betrieben oder beworben.
+                Valorant ist ein Warenzeichen von Riot Games, Inc.
+            </p>
         </div>
-    </main>
+    </div>
+
+    <!-- Datenschutz Modal -->
+    <div id="datenschutz-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Datenschutz</h2>
+            <hr>
+            <p><strong>Externe Inhalte (YouTube):</strong></p>
+            <p>
+                Diese Website nutzt YouTube-Videos mit youtube-nocookie.com.
+                Dies bedeutet, dass YouTube <strong>KEINE Cookies setzt</strong> und 
+                <strong>Euch nicht trackt</strong>. Die Videos werden in einem sicheren Modus eingebettet.
+            </p>
+            <p>
+                Es werden <strong>KEINE Cookies</strong> von dieser Website oder YouTube akzeptiert.
+                Eure Daten sind sicher - wir sammeln keine persönlichen Informationen.
+            </p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
