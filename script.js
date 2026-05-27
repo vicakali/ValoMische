@@ -155,22 +155,25 @@ function goToScreen(screen) {
 }
 
 async function loadValorantData() {
+    async function loadValorantData() {
     try {
         // Load Agents
         const agentsResponse = await fetch(`${VALORANT_API}/agents`);
         const agentsData = await agentsResponse.json();
         allAgents = agentsData.data.filter(agent => !agent.isLocked && agent.fullPortrait);
+        console.log('Agents loaded:', allAgents.length);
 
         // Load Maps
         const mapsResponse = await fetch(`${VALORANT_API}/maps`);
         const mapsData = await mapsResponse.json();
+        console.log('All maps from API:', mapsData.data.length);
+        
         allMaps = mapsData.data.filter(map => map.displayName && map.splash && 
             !BANNED_MAPS.includes(map.displayName)
         );
+        console.log('Filtered maps:', allMaps.length);
 
-        // Populate map select in quick mode
         populateMapSelect();
-
         console.log('Valorant data loaded successfully');
     } catch (error) {
         console.error('Error loading Valorant data:', error);
