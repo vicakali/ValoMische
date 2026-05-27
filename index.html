@@ -131,18 +131,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     <!-- Quick Generate Screen -->
     <div id="quickScreen" class="screen">
-        <!-- Navigation Bar -->
-        <nav class="navbar">
-            <div class="navbar-container">
-                <h1 class="navbar-title">Valorant Team Comp Generator</h1>
-                <div class="navbar-controls">
-                    <!-- Map Selection -->
-                    <div class="control-group">
-                        <label for="mapSelect">Map:</label>
-                        <select id="mapSelect">
-                            <option value="random">Random</option>
-                        </select>
-                    </div>
+    
 
                     <!-- Team Comp Type -->
                     <div class="control-group">
@@ -174,6 +163,45 @@ document.addEventListener("DOMContentLoaded", function() {
 
         <!-- Main Content -->
         <main class="container">
+            <h1>Valorant Team Comp Generator</h1>
+
+            <!-- ✅ ADD THIS - New controls-section div wrapping all controls -->
+<div class="controls-section">
+    <!-- Map Selection -->
+    <div class="control-group">
+        <label for="mapSelect">Map:</label>
+        <select id="mapSelect">
+            <option value="random">Random</option>
+            <option value="haven">Haven</option>
+            <option value="split">Split</option>
+            <option value="ascent">Ascent</option>
+            <option value="lotus">Lotus</option>
+            <option value="pearl">Pearl</option>
+            <option value="icebox">Icebox</option>
+            <option value="breeze">Breeze</option>
+            <option value="sunset">Sunset</option>
+            <option value="fracture">Fracture</option>
+        </select>
+    </div>
+    <!-- Team Comp Type -->
+    <div class="control-group">
+        <label for="compTypeSelect">Team Comp Type:</label>
+        <select id="compTypeSelect">
+            <option value="balanced">Balanced</option>
+            <option value="aggressive">Aggressive</option>
+            <option value="defensive">Defensive</option>
+            <option value="utility-heavy">Utility Heavy</option>
+            <option value="random">Random</option>
+        </select>
+    </div>
+    <!-- Excluded Agents -->
+    <div class="control-group">
+        <label for="excludedAgents">Exclude Agents:</label>
+        <input type="text" id="excludedAgents" placeholder="e.g., Jett, Sage">
+    </div>
+    <!-- Generate Button -->
+    <button id="generateBtn" class="generate-btn">Generate Team</button>
+</div>
             <!-- Map Display -->
             <div id="mapDisplay" class="map-display">
                 <h2>Map: <span id="selectedMap">Not Selected</span></h2>
