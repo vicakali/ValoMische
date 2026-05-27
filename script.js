@@ -1,3 +1,4 @@
+alert('Script loaded!');
 // Valorant API Base URL
 const VALORANT_API = 'https://valorant-api.com/v1';
 
