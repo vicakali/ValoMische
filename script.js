@@ -40,7 +40,7 @@ const compPresets = {
 
 // DOM Elements
 const startScreen = document.getElementById('startScreen');
-const quickScreen = document.getElementById('quickScreen');
+const quickScreen = null;
 const manualScreen = document.getElementById('manualScreen');
 const videoIntroOverlay = document.getElementById('videoIntroOverlay');
 
@@ -90,7 +90,7 @@ selectAllBtn.addEventListener('click', selectAllAgents);
 deselectAllBtn.addEventListener('click', deselectAllAgents);
 generateManualBtn.addEventListener('click', generateTeamManual);
 backToStartBtn2.addEventListener('click', () => goToScreen('start'));
-goToQuickBtn.addEventListener('click', () => goToScreen('quick'));
+goToQuickBtn.addEventListener('click', () => goToScreen('start'));
 
 // Event Listeners - Video Skip
 videoIntroOverlay.addEventListener('click', skipVideo);
