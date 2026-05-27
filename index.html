@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valorant Team Comp Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <h1 class="navbar-title">Valorant Team Comp Generator</h1>
+            <div class="navbar-controls">
+                <!-- Map Selection -->
+                <div class="control-group">
+                    <label for="mapSelect">Map:</label>
+                    <select id="mapSelect">
+                        <option value="random">Random</option>
+                        <option value="haven">Haven</option>
+                        <option value="split">Split</option>
+                        <option value="ascent">Ascent</option>
+                        <option value="lotus">Lotus</option>
+                        <option value="pearl">Pearl</option>
+                        <option value="icebox">Icebox</option>
+                        <option value="breeze">Breeze</option>
+                        <option value="sunset">Sunset</option>
+                        <option value="fracture">Fracture</option>
+                    </select>
+                </div>
+
+                <!-- Team Comp Type -->
+                <div class="control-group">
+                    <label for="compTypeSelect">Team Comp Type:</label>
+                    <select id="compTypeSelect">
+                        <option value="balanced">Balanced</option>
+                        <option value="aggressive">Aggressive</option>
+                        <option value="defensive">Defensive</option>
+                        <option value="utility-heavy">Utility Heavy</option>
+                        <option value="random">Random</option>
+                    </select>
+                </div>
+
+                <!-- Excluded Agents -->
+                <div class="control-group">
+                    <label for="excludedAgents">Exclude Agents:</label>
+                    <input type="text" id="excludedAgents" placeholder="e.g., Jett, Sage">
+                </div>
+
+                <!-- Generate Button -->
+                <button id="generateBtn" class="generate-btn">Generate Team</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Map Display -->
+        <div id="mapDisplay" class="map-display">
+            <h2>Map: <span id="selectedMap">Not Selected</span></h2>
+        </div>
+
+        <!-- Team Composition Display -->
+        <div id="teamDisplay" class="team-display">
+            <h2>Your Team Composition</h2>
+            <div id="teamGrid" class="team-grid">
+                <!-- Team members will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Team Analysis -->
+        <div id="analysisDisplay" class="analysis-display">
+            <h2>Team Analysis</h2>
+            <div id="analysisContent" class="analysis-content">
+                <!-- Analysis will be inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
