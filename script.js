@@ -8,7 +8,7 @@ let selectedAgents = [];
 let allAgents = [];
 let allMaps = [];
 
-const BANNED_MAPS = ["Skirmish A", "Skirmish B","Skirmish C","District","Kasbah", "Drift", "Glitch","Plaza","Basic Training","The Range","The Range"];
+const BANNED_MAPS = ["Skirmish A", "Skirmish B","Skirmish C","District","Kasbah", "Drift", "Glitch","Piazza","Basic Training","The Range","The Range"];
 
 // Team Composition Presets
 const compPresets = {
