@@ -172,10 +172,17 @@ async function loadValorantData() {
         );
         console.log('Filtered maps:', allMaps.length);
 
+       // ✅ ADD THIS - Show alert with what loaded
+        alert(`API Loaded!\nAgents: ${allAgents.length}\nMaps: ${allMaps.length}`);
+
+    
+
         populateMapSelect();
         console.log('Valorant data loaded successfully');
     } catch (error) {
         console.error('Error loading Valorant data:', error);
+        // ✅ ADD THIS - Show error alert
+        alert('ERROR loading API:\n' + error.message);
     }
 }
 
