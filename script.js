@@ -132,7 +132,8 @@ function skipVideo() {
 function selectGameMode(mode) {
     gameMode = mode;
     skipVideo();
-    goToScreen(gameMode === 'solo' ? 'quick' : 'quick');
+    goToScreen('manual');  // Go directly to manual selection instead of 'quick'
+}
 }
 
 function goToScreen(screen) {
