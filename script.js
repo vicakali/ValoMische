@@ -155,7 +155,6 @@ function goToScreen(screen) {
 }
 
 async function loadValorantData() {
-    async function loadValorantData() {
     try {
         // Load Agents
         const agentsResponse = await fetch(`${VALORANT_API}/agents`);
