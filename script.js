@@ -133,7 +133,7 @@ function selectGameMode(mode) {
     gameMode = mode;
     skipVideo();
     goToScreen('manual');  // Go directly to manual selection instead of 'quick'
-}
+
 }
 
 function goToScreen(screen) {
