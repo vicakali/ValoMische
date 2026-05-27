@@ -138,7 +138,7 @@ function selectGameMode(mode) {
 
 function goToScreen(screen) {
     startScreen.classList.remove('active');
-    quickScreen.classList.remove('active');
+    if (quickScreen) quickScreen.classList.remove('active');  // ✅ Check if it exists first
     manualScreen.classList.remove('active');
 
     switch(screen) {
@@ -146,7 +146,7 @@ function goToScreen(screen) {
             startScreen.classList.add('active');
             break;
         case 'quick':
-            quickScreen.classList.add('active');
+            if (quickScreen) quickScreen.classList.add('active');  // ✅ Check if it exists
             break;
         case 'manual':
             manualScreen.classList.add('active');
