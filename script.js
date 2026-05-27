@@ -1,4 +1,6 @@
 alert('Script loaded!');
+console.log('About to load Valorant data');
+alert('Starting API load...');
 // Valorant API Base URL
 const VALORANT_API = 'https://valorant-api.com/v1';
 
@@ -156,6 +158,7 @@ function goToScreen(screen) {
 }
 
 async function loadValorantData() {
+    alert('Inside loadValorantData');
     try {
         // Load Agents
         const agentsResponse = await fetch(`${VALORANT_API}/agents`);
