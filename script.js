@@ -163,7 +163,9 @@ async function loadValorantData() {
         // Load Maps
         const mapsResponse = await fetch(`${VALORANT_API}/maps`);
         const mapsData = await mapsResponse.json();
-        allMaps = mapsData.data.filter(map => map.displayName && map.splash);
+        allMaps = mapsData.data.filter(map => map.displayName && map.splash && 
+            !BANNED_MAPS.includes(map.displayName)
+        );
 
         // Populate map select in quick mode
         populateMapSelect();
