@@ -8,7 +8,6 @@
 </head>
 <body>
     <!-- YouTube Video Intro Overlay -->
-    <!-- 1. HTML: Das Intro-Element -->
 <div id="videoIntroOverlay" class="video-intro-overlay">
     <div class="video-intro-container">
         <iframe 
@@ -51,7 +50,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Verdunkelt das Video */
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,7 +59,7 @@
 }
 
 .btn-continue {
-    background-color: #ff4655; /* Valorant Rot */
+    background-color: #ff4655;
     color: white;
     border: none;
     padding: 20px 60px;
@@ -96,11 +95,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (continueBtn && introOverlay) {
         continueBtn.addEventListener("click", function() {
-            // Intro ausblenden
             introOverlay.style.transition = "opacity 0.8s ease";
             introOverlay.style.opacity = "0";
             
-            // Nach der Animation komplett entfernen
             setTimeout(() => {
                 introOverlay.style.display = "none";
             }, 800);
@@ -128,12 +125,6 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         </div>
     </div>
-
-
-
-
-
-        
 
     <!-- Manual Selection Screen -->
     <div id="manualScreen" class="screen">
@@ -179,23 +170,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 </div>
             </div>
         </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <p><strong>Attribution:</strong> Chamber Trailer © Riot Games | Agent & Map Data © Riot Games</p>
-                <p>
-                    <strong>Disclaimer:</strong> This is a fan-made project and is not affiliated with, endorsed by, or created by Riot Games, Inc. 
-                    Valorant is a registered trademark of Riot Games, Inc. This project is created in compliance with Riot Games' 
-                    <a href="https://www.riotgames.com/en/legal" target="_blank">Fanwork Guidelines</a>.
-                </p>
-                <p><a href="#impressum-modal" class="impressum-link">Impressum</a> | <a href="#datenschutz-modal" class="datenschutz-link">Datenschutz</a></p>
-            </div>
-        </footer>
     </div>
-
-    </div>
-    <!-- End of manualScreen -->
 
     <!-- Footer - Outside all screens so it appears everywhere -->
     <footer class="footer">
@@ -209,11 +184,6 @@ document.addEventListener("DOMContentLoaded", function() {
             <p><a href="#impressum-modal" class="impressum-link">Impressum</a> | <a href="#datenschutz-modal" class="datenschutz-link">Datenschutz</a></p>
         </div>
     </footer>
-
-    <!-- Impressum Modal -->
-    <div id="impressum-modal" class="modal">
-        <!-- ... rest of your modals ... -->
-    </div>
 
     <!-- Impressum Modal -->
     <div id="impressum-modal" class="modal">
