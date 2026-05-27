@@ -129,114 +129,11 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
     </div>
 
-    <!-- Quick Generate Screen -->
-    <div id="quickScreen" class="screen">
-    
 
-                    <!-- Team Comp Type -->
-                    <div class="control-group">
-                        <label for="compTypeSelect">Team Comp Type:</label>
-                        <select id="compTypeSelect">
-                            <option value="balanced">Balanced</option>
-                            <option value="aggressive">Aggressive</option>
-                            <option value="defensive">Defensive</option>
-                            <option value="utility-heavy">Utility Heavy</option>
-                            <option value="random">Random</option>
-                        </select>
-                    </div>
 
-                    <!-- Excluded Agents -->
-                    <div class="control-group">
-                        <label for="excludedAgents">Exclude Agents:</label>
-                        <input type="text" id="excludedAgents" placeholder="e.g., Jett, Sage">
-                    </div>
 
-                    <!-- Generate Button -->
-                    <button id="generateBtn" class="generate-btn">Generate Team</button>
 
-                    <!-- Navigation Buttons -->
-                    <button id="backToStartBtn" class="nav-btn back-btn">← Start</button>
-                    <button id="goToManualBtn" class="nav-btn">Manual Selection →</button>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="container">
-            <h1>Valorant Team Comp Generator</h1>
-
-            <!-- ✅ ADD THIS - New controls-section div wrapping all controls -->
-<div class="controls-section">
-    <!-- Map Selection -->
-    <div class="control-group">
-        <label for="mapSelect">Map:</label>
-        <select id="mapSelect">
-            <option value="random">Random</option>
-            <option value="haven">Haven</option>
-            <option value="split">Split</option>
-            <option value="ascent">Ascent</option>
-            <option value="lotus">Lotus</option>
-            <option value="pearl">Pearl</option>
-            <option value="icebox">Icebox</option>
-            <option value="breeze">Breeze</option>
-            <option value="sunset">Sunset</option>
-            <option value="fracture">Fracture</option>
-        </select>
-    </div>
-    <!-- Team Comp Type -->
-    <div class="control-group">
-        <label for="compTypeSelect">Team Comp Type:</label>
-        <select id="compTypeSelect">
-            <option value="balanced">Balanced</option>
-            <option value="aggressive">Aggressive</option>
-            <option value="defensive">Defensive</option>
-            <option value="utility-heavy">Utility Heavy</option>
-            <option value="random">Random</option>
-        </select>
-    </div>
-    <!-- Excluded Agents -->
-    <div class="control-group">
-        <label for="excludedAgents">Exclude Agents:</label>
-        <input type="text" id="excludedAgents" placeholder="e.g., Jett, Sage">
-    </div>
-    <!-- Generate Button -->
-    <button id="generateBtn" class="generate-btn">Generate Team</button>
-</div>
-            <!-- Map Display -->
-            <div id="mapDisplay" class="map-display">
-                <h2>Map: <span id="selectedMap">Not Selected</span></h2>
-            </div>
-
-            <!-- Team Composition Display -->
-            <div id="teamDisplay" class="team-display">
-                <h2>Your Team Composition</h2>
-                <div id="teamGrid" class="team-grid">
-                    <!-- Team members will be inserted here -->
-                </div>
-            </div>
-
-            <!-- Team Analysis -->
-            <div id="analysisDisplay" class="analysis-display">
-                <h2>Team Analysis</h2>
-                <div id="analysisContent" class="analysis-content">
-                    <!-- Analysis will be inserted here -->
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <p><strong>Attribution:</strong> Chamber Trailer © Riot Games | Agent & Map Data © Riot Games</p>
-                <p>
-                    <strong>Disclaimer:</strong> This is a fan-made project and is not affiliated with, endorsed by, or created by Riot Games, Inc. 
-                    Valorant is a registered trademark of Riot Games, Inc. This project is created in compliance with Riot Games' 
-                    <a href="https://www.riotgames.com/en/legal" target="_blank">Fanwork Guidelines</a>.
-                </p>
-                <p><a href="#impressum-modal" class="impressum-link">Impressum</a> | <a href="#datenschutz-modal" class="datenschutz-link">Datenschutz</a></p>
-            </div>
-        </footer>
-    </div>
+        
 
     <!-- Manual Selection Screen -->
     <div id="manualScreen" class="screen">
@@ -295,6 +192,27 @@ document.addEventListener("DOMContentLoaded", function() {
                 <p><a href="#impressum-modal" class="impressum-link">Impressum</a> | <a href="#datenschutz-modal" class="datenschutz-link">Datenschutz</a></p>
             </div>
         </footer>
+    </div>
+
+    </div>
+    <!-- End of manualScreen -->
+
+    <!-- Footer - Outside all screens so it appears everywhere -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p><strong>Attribution:</strong> Chamber Trailer © Riot Games | Agent & Map Data © Riot Games</p>
+            <p>
+                <strong>Disclaimer:</strong> This is a fan-made project and is not affiliated with, endorsed by, or created by Riot Games, Inc. 
+                Valorant is a registered trademark of Riot Games, Inc. This project is created in compliance with Riot Games' 
+                <a href="https://www.riotgames.com/en/legal" target="_blank">Fanwork Guidelines</a>.
+            </p>
+            <p><a href="#impressum-modal" class="impressum-link">Impressum</a> | <a href="#datenschutz-modal" class="datenschutz-link">Datenschutz</a></p>
+        </div>
+    </footer>
+
+    <!-- Impressum Modal -->
+    <div id="impressum-modal" class="modal">
+        <!-- ... rest of your modals ... -->
     </div>
 
     <!-- Impressum Modal -->
