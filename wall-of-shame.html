@@ -16,7 +16,7 @@
         
         /* Spieler-Karte */
         .player-card { background: #1f2326; padding: 20px; margin: 15px 0; border-radius: 8px; display: flex; align-items: center; gap: 20px; border: 1px solid #2f353a; }
-        .agent-icon { width: 65px; height: 65px; border-radius: 50%; background: #333; border: 2px solid #ff4655; }
+        .agent-icon { width: 65px; height: 65px; border-radius: 50%; background: #333; border: 2px solid #ff4655; object-fit: cover; }
         .player-info { flex-grow: 1; }
         .player-name { font-size: 20px; font-weight: bold; color: #ff4655; margin-bottom: 5px; }
         .player-desc { font-style: italic; color: #aaa; font-size: 14px; margin-bottom: 10px; }
@@ -63,7 +63,7 @@
             <option value="gekko">Gekko</option>
           <option value="harbor">Harbor</option>
             <option value="iso">Iso</option>
-            <option value="kayo">Kayo</option>
+            <option value="kay/o">Kayo</option>
             <option value="killjoy">Killjoy</option>
             <option value="miks">Miks</option>
             <option value="neon">Neon</option>
@@ -160,7 +160,8 @@
 
             listDiv.innerHTML += `
                 <div class="player-card">
-                    <img class="agent-icon" src="${imgUrl}" alt="${player.agent}">
+                    <img class="agent-icon" src="${imgUrl}" alt="${player.agent}" 
+                    onerror="this.src='https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png'">
                     <div class="player-info">
                         <div class="player-name">${player.name}</div>
                         <div class="player-desc">${descText}</div>
