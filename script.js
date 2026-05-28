@@ -1,63 +1,31 @@
 alert('Script loaded!');
-console.log('About to load Valorant data');
-alert('Starting API load...');
+
 // Valorant API Base URL
 const VALORANT_API = 'https://valorant-api.com/v1';
 
 // Global State
-let gameMode = null; // 'solo' or 'team'
+let gameMode = null;
 let selectedMap = null;
 let selectedAgents = [];
 let allAgents = [];
 let allMaps = [];
 
-const BANNED_MAPS = ["Skirmish A", "Skirmish B","Skirmish C","District","Kasbah", "Drift", "Glitch","Piazza","Basic Training","The Range","The Range"];
+const BANNED_MAPS = ["Skirmish A", "Skirmish B","Skirmish C","District","Kasbah", "Drift", "Glitch","Piazza","Basic Training","The Range"];
 
 // Team Composition Presets
 const compPresets = {
-    balanced: {
-        duelist: 1,
-        initiator: 1,
-        controller: 1,
-        sentinel: 2
-    },
-    aggressive: {
-        duelist: 2,
-        initiator: 1,
-        controller: 1,
-        sentinel: 1
-    },
-    defensive: {
-        duelist: 1,
-        initiator: 1,
-        controller: 1,
-        sentinel: 2
-    },
-    'utility-heavy': {
-        duelist: 1,
-        initiator: 2,
-        controller: 1,
-        sentinel: 1
-    }
+    balanced: { duelist: 1, initiator: 1, controller: 1, sentinel: 2 },
+    aggressive: { duelist: 2, initiator: 1, controller: 1, sentinel: 1 },
+    defensive: { duelist: 1, initiator: 1, controller: 1, sentinel: 2 },
+    'utility-heavy': { duelist: 1, initiator: 2, controller: 1, sentinel: 1 }
 };
 
 // DOM Elements
 const startScreen = document.getElementById('startScreen');
-const quickScreen = null;
 const manualScreen = document.getElementById('manualScreen');
 const videoIntroOverlay = document.getElementById('videoIntroOverlay');
-
 const soloBtn = document.getElementById('soloBtn');
 const teamBtn = document.getElementById('teamBtn');
-
-const mapSelect = document.getElementById('mapSelect');
-const compTypeSelect = document.getElementById('compTypeSelect');
-const excludedAgentsInput = document.getElementById('excludedAgents');
-const generateBtn = document.getElementById('generateBtn');
-const selectedMapSpan = document.getElementById('selectedMap');
-const teamGrid = document.getElementById('teamGrid');
-const analysisContent = document.getElementById('analysisContent');
-
 const mapsGrid = document.getElementById('mapsGrid');
 const agentsGrid = document.getElementById('agentsGrid');
 const selectAllBtn = document.getElementById('selectAllBtn');
@@ -65,11 +33,7 @@ const deselectAllBtn = document.getElementById('deselectAllBtn');
 const generateManualBtn = document.getElementById('generateManualBtn');
 const manualTeamDisplay = document.getElementById('manualTeamDisplay');
 const manualTeamGrid = document.getElementById('manualTeamGrid');
-
-const backToStartBtn = document.getElementById('backToStartBtn');
 const backToStartBtn2 = document.getElementById('backToStartBtn2');
-const goToManualBtn = document.getElementById('goToManualBtn');
-const goToQuickBtn = document.getElementById('goToQuickBtn');
 
 // Modal Elements
 const impressumModal = document.getElementById('impressum-modal');
@@ -78,27 +42,18 @@ const impressumLink = document.querySelector('.impressum-link');
 const datenschutzLink = document.querySelector('.datenschutz-link');
 const closeModals = document.querySelectorAll('.close-modal');
 
-// Event Listeners - Start Screen
+// Event Listeners
 soloBtn.addEventListener('click', () => selectGameMode('solo'));
 teamBtn.addEventListener('click', () => selectGameMode('team'));
-
-// Event Listeners - Quick Generate
-generateBtn.addEventListener('click', generateTeamQuick);
-mapSelect.addEventListener('change', updateMapDisplay);
-backToStartBtn.addEventListener('click', () => goToScreen('start'));
-goToManualBtn.addEventListener('click', () => goToScreen('manual'));
-
-// Event Listeners - Manual Selection
 selectAllBtn.addEventListener('click', selectAllAgents);
 deselectAllBtn.addEventListener('click', deselectAllAgents);
 generateManualBtn.addEventListener('click', generateTeamManual);
 backToStartBtn2.addEventListener('click', () => goToScreen('start'));
-goToQuickBtn.addEventListener('click', () => goToScreen('start'));
 
-// Event Listeners - Video Skip
+// Video Skip
 videoIntroOverlay.addEventListener('click', skipVideo);
 
-// Event Listeners - Modals
+// Modals
 impressumLink.addEventListener('click', (e) => {
     e.preventDefault();
     openModal(impressumModal);
@@ -121,14 +76,11 @@ window.addEventListener('click', (e) => {
     }
 });
 
-// Initialize
-// Run immediately since DOM is already loaded
-alert('Running loadValorantData immediately');
+// Load data immediately
+alert('Loading API data...');
 loadValorantData();
-});
 
 // Functions
-
 function skipVideo() {
     videoIntroOverlay.classList.add('hidden');
 }
@@ -136,153 +88,41 @@ function skipVideo() {
 function selectGameMode(mode) {
     gameMode = mode;
     skipVideo();
-    goToScreen('manual');  // Go directly to manual selection instead of 'quick'
-
+    goToScreen('manual');
 }
 
 function goToScreen(screen) {
     startScreen.classList.remove('active');
-    if (quickScreen) quickScreen.classList.remove('active');  // ✅ Check if it exists first
     manualScreen.classList.remove('active');
 
-    switch(screen) {
-        case 'start':
-            startScreen.classList.add('active');
-            break;
-        case 'quick':
-            if (quickScreen) quickScreen.classList.add('active');  // ✅ Check if it exists
-            break;
-        case 'manual':
-            manualScreen.classList.add('active');
-            break;
+    if (screen === 'start') {
+        startScreen.classList.add('active');
+    } else if (screen === 'manual') {
+        manualScreen.classList.add('active');
     }
 }
 
 async function loadValorantData() {
-    alert('Inside loadValorantData');
     try {
-        // Load Agents
+        alert('Fetching agents...');
         const agentsResponse = await fetch(`${VALORANT_API}/agents`);
         const agentsData = await agentsResponse.json();
         allAgents = agentsData.data.filter(agent => !agent.isLocked && agent.fullPortrait);
-        console.log('Agents loaded:', allAgents.length);
+        alert(`Agents loaded: ${allAgents.length}`);
 
-        // Load Maps
+        alert('Fetching maps...');
         const mapsResponse = await fetch(`${VALORANT_API}/maps`);
         const mapsData = await mapsResponse.json();
-        console.log('All maps from API:', mapsData.data.length);
-        
+        alert(`All maps: ${mapsData.data.length}`);
+
         allMaps = mapsData.data.filter(map => map.displayName && map.splash && 
             !BANNED_MAPS.includes(map.displayName)
         );
-        console.log('Filtered maps:', allMaps.length);
+        alert(`Filtered maps: ${allMaps.length}`);
 
-       // ✅ ADD THIS - Show alert with what loaded
-        alert(`API Loaded!\nAgents: ${allAgents.length}\nMaps: ${allMaps.length}`);
-
-    
-
-        populateMapSelect();
-        console.log('Valorant data loaded successfully');
     } catch (error) {
-        console.error('Error loading Valorant data:', error);
-        // ✅ ADD THIS - Show error alert
-        alert('ERROR loading API:\n' + error.message);
+        alert('ERROR: ' + error.message);
     }
-}
-
-function populateMapSelect() {
-    const mapOptions = mapSelect.querySelectorAll('option');
-    mapOptions.forEach((option, index) => {
-        if (index > 0) option.remove();
-    });
-
-    allMaps.forEach(map => {
-        const option = document.createElement('option');
-        option.value = map.uuid;
-        option.textContent = map.displayName;
-        mapSelect.appendChild(option);
-    });
-}
-
-function updateMapDisplay() {
-    const selectedMapId = mapSelect.value;
-    if (selectedMapId === 'random') {
-        selectedMapSpan.textContent = 'Random (will be selected on generation)';
-    } else {
-        const map = allMaps.find(m => m.uuid === selectedMapId);
-        selectedMapSpan.textContent = map ? map.displayName : 'Unknown';
-    }
-}
-
-function getExcludedAgents() {
-    const input = excludedAgentsInput.value;
-    return input
-        .split(',')
-        .map(agent => agent.trim().toLowerCase())
-        .filter(agent => agent.length > 0);
-}
-
-function getAgentRole(agent) {
-    if (!agent.role) return 'unknown';
-    return agent.role.displayName.toLowerCase();
-}
-
-function generateTeamQuick() {
-    let selectedMapId = mapSelect.value;
-    const compType = compTypeSelect.value;
-    
-    let compConfig;
-    if (compType === 'random') {
-        const types = Object.keys(compPresets);
-        compConfig = compPresets[types[Math.floor(Math.random() * types.length)]];
-    } else {
-        compConfig = compPresets[compType];
-    }
-    
-    if (selectedMapId === 'random') {
-        selectedMapId = allMaps[Math.floor(Math.random() * allMaps.length)].uuid;
-    }
-
-    const excluded = getExcludedAgents();
-    const availableAgents = allAgents.filter(agent => 
-        !excluded.includes(agent.displayName.toLowerCase())
-    );
-
-    const team = [];
-    for (const [role, count] of Object.entries(compConfig)) {
-        const roleAgents = availableAgents.filter(agent => 
-            getAgentRole(agent) === role
-        );
-
-        for (let i = 0; i < count; i++) {
-            if (roleAgents.length > 0) {
-                const agent = roleAgents[Math.floor(Math.random() * roleAgents.length)];
-                team.push(agent);
-            }
-        }
-    }
-
-    const mapData = allMaps.find(m => m.uuid === selectedMapId);
-    displayTeamQuick(team, mapData);
-}
-
-function displayTeamQuick(team, mapData) {
-    teamGrid.innerHTML = '';
-    selectedMapSpan.textContent = mapData ? mapData.displayName : 'Unknown';
-
-    team.forEach(agent => {
-        const card = document.createElement('div');
-        card.className = `agent-card team-member`;
-        card.innerHTML = `
-            <img src="${agent.fullPortrait}" alt="${agent.displayName}" class="agent-image">
-            <div class="agent-info">
-                <div class="agent-name">${agent.displayName}</div>
-                <div class="agent-role">${getAgentRole(agent)}</div>
-            </div>
-        `;
-        teamGrid.appendChild(card);
-    });
 }
 
 function loadMapsManual() {
@@ -300,12 +140,9 @@ function loadMapsManual() {
 }
 
 function selectMapManual(map, cardElement) {
-    // Deselect previous
     document.querySelectorAll('.map-card.selected').forEach(card => {
         card.classList.remove('selected');
     });
-
-    // Select new
     selectedMap = map;
     cardElement.classList.add('selected');
 }
@@ -320,7 +157,7 @@ function loadAgentsManual() {
             <img src="${agent.fullPortrait}" alt="${agent.displayName}" class="agent-image">
             <div class="agent-info">
                 <div class="agent-name">${agent.displayName}</div>
-                <div class="agent-role">${getAgentRole(agent)}</div>
+                <div class="agent-role">${agent.role.displayName.toLowerCase()}</div>
             </div>
         `;
         card.addEventListener('click', () => toggleAgentSelection(agent.uuid, card));
@@ -357,16 +194,12 @@ function generateTeamManual() {
         alert('Please select a map!');
         return;
     }
-
     if (selectedAgents.length === 0) {
         alert('Please select at least one agent!');
         return;
     }
 
-    const availableAgents = allAgents.filter(agent => 
-        selectedAgents.includes(agent.uuid)
-    );
-
+    const availableAgents = allAgents.filter(agent => selectedAgents.includes(agent.uuid));
     const team = [];
     const teamSize = gameMode === 'solo' ? 1 : 5;
 
@@ -384,22 +217,21 @@ function displayTeamManual(team) {
 
     team.forEach(agent => {
         const card = document.createElement('div');
-        card.className = `agent-card team-member`;
+        card.className = 'agent-card team-member';
         card.innerHTML = `
             <img src="${agent.fullPortrait}" alt="${agent.displayName}" class="agent-image">
             <div class="agent-info">
                 <div class="agent-name">${agent.displayName}</div>
-                <div class="agent-role">${getAgentRole(agent)}</div>
+                <div class="agent-role">${agent.role.displayName.toLowerCase()}</div>
             </div>
         `;
         manualTeamGrid.appendChild(card);
     });
 
-    // Scroll to result
     manualTeamDisplay.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Override screen navigation for manual mode
+// Override goToScreen for manual mode
 const originalGoToScreen = goToScreen;
 goToScreen = function(screen) {
     if (screen === 'manual') {
@@ -412,7 +244,6 @@ goToScreen = function(screen) {
     originalGoToScreen.call(this, screen);
 };
 
-// Modal Functions
 function openModal(modal) {
     modal.classList.add('show');
 }
