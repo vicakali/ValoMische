@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valorant - Wall of Shame</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #111; color: #fff; padding: 20px; margin: 0; }
+        h1 { color: #ff4655; text-transform: uppercase; letter-spacing: 2px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        /* Formular Styling */
+        .form-box { background: #1f2326; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #ff4655; }
+        input, select { background: #333; color: white; border: 1px solid #444; padding: 8px 12px; margin-right: 10px; border-radius: 4px; margin-bottom: 10px; }
+        
+        /* Spieler-Karte */
+        .player-card { background: #1f2326; padding: 20px; margin: 15px 0; border-radius: 8px; display: flex; align-items: center; gap: 20px; border: 1px solid #2f353a; }
+        .agent-icon { width: 65px; height: 65px; border-radius: 50%; background: #333; border: 2px solid #ff4655; }
+        .player-info { flex-grow: 1; }
+        .player-name { font-size: 20px; font-weight: bold; color: #ff4655; margin-bottom: 5px; }
+        .player-desc { font-style: italic; color: #aaa; font-size: 14px; margin-bottom: 10px; }
+        
+        /* Grid für die Statistiken */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 15px; }
+        .stat-item { background: #14171a; padding: 8px; border-radius: 4px; text-align: center; font-size: 13px; border: 1px solid #2a2f35; }
+        .stat-item span { display: block; font-size: 18px; font-weight: bold; color: #ece8e1; margin-top: 3px; }
+        .stat-item.positive span { color: #00ff88; } /* Für Nice Save */
+
+        /* Buttons Styling */
+        .button-group { display: flex; flex-wrap: wrap; gap: 5px; }
+        button { background: #ff4655; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 12px; text-transform: uppercase; transition: 0.2s; }
+        button:hover { background: #b7323f; }
+        button.btn-positive { background: #00ff88; color: #111; }
+        button.btn-positive:hover { background: #00b35f; }
+        
+        .footer { margin-top: 50px; font-size: 11px; color: #666; text-align: center; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Wall of Shame - Valorant</h1>
+
+    <div class="form-box">
+        <h3>Add new player</h3>
+        <input type="text" id="newName" placeholder="Name">
+        <input type="text" id="newDesc" placeholder="Title">
+        <select id="newAgent">
+            <option value="jett">Jett</option>
+            <option value="reyna">Reyna</option>
+            <option value="raze">Raze</option>
+            <option value="omen">Omen</option>
+            <option value="cypher">Cypher</option>
+            <option value="sage">Sage</option>
+            <option value="sova">Sova</option>
+           <option value="astra">Astra</option>
+            <option value="breach">Breach</option>
+            <option value="chamber">Chamber</option>
+            <option value="clove">Clove</option>
+            <option value="deadlock">Deadlock</option>
+            <option value="fade">Fade</option>
+            <option value="gekko">Gekko</option>
+          <option value="harbor">Harbor</option>
+            <option value="iso">Iso</option>
+            <option value="kayo">Kayo</option>
+            <option value="killjoy">Killjoy</option>
+            <option value="miks">Miks</option>
+            <option value="neon">Neon</option>
+            <option value="phoenix">Phoenix</option>
+           <option value="skye">Skye</option>
+            <option value="viper">Viper</option>
+            <option value="vyse">Vyse</option>
+            <option value="waylay">Waylay</option>
+            <option value="veto">Veto</option>
+            <option value="yoru">Yoru</option>
+            <option value="tejo">Tejo</option>
+        </select>
+        <button onclick="addPlayer()">Ready</button>
+    </div>
+
+    <div id="leaderboard-list">Loading..</div>
+
+    <div class="footer">
+        <p>Dieses Projekt wurde gemäß der Richtlinie „Rechtliches Jibber Jabber“ von Riot Games unter Verwendung von Eigentum von Riot Games erstellt. Riot Games unterstützt dieses Projekt nicht und ist nicht dafür verantwortlich.</p>
+    </div>
+</div>
+
+<script>
+    // === CONFIGURATION ===
+    // Trage hier deine echten Daten aus Supabase ein!
+    const SUPABASE_URL = "https://uocizgkidwlirvsedgov.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_CdQOGNN_uzR5qQ1bLk2f_A_MHnDCX_U";
+    
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Zuordnung der Agenten-Namen zu den IDs der Community-API (valorant-api.com)
+    const agentImages = {
+        jett: "add6443a-41bd-e414-f6ad-e58d267f4e95",
+        reyna: "dbe8757e-9e92-4ed4-b39f-9dfc589691d4",
+        raze: "f94c3b30-42be-e959-889c-5aa313dba261",
+        omen: "8e253930-db11-447a-913c-64a3511caf73",
+        cypher: "117ed9e3-49f3-6512-3ccf-00a78e383803",
+        sage: "5645c13d-4f74-4ca7-c04d-839a04a4cf4b",
+        sova: "320b2a48-4d9b-a075-30f1-1f93a9b63a6e",
+        astra: "4ee40330-ecdd-4f2f-98a8-eb1243428373",
+        breach: "1b47567f-8f7b-444b-aae3-b0c634622d10",
+        chamber: "22697a3d-45bf-8dd7-4fec-84a9e28c69d7",
+        clove: "bb2a4828-46eb-dd8e-a7d1-7f890638ab38",
+        deadlock: "cc8b0c87-44ca-888b-a3c3-39bc9925902f",
+        fade: "deadf121-4b5e-639d-0542-ceb414170e83"
+        gekko: "e370fa57-4757-3604-3648-499e1f642d3f",
+        harbor: "2c5dbf59-4610-d5e3-eb54-d79315c0b11d",
+        iso: "1db62105-4019-ecff-2f6c-749da222853c",
+        kayo: "a0fa9b30-43a1-4320-9c10-b18475510233",
+        killjoy: "1e58de9c-4950-5125-93e9-a0aee9f98746",
+        miks: "7c8a4701-4de6-9355-b254-e09bc2a34b72",
+        neon: "bb3b1b2a-4643-d34e-437b-64906f3e0850",
+        phoenix: "eb93336a-449b-9c1b-0512-be940a9e2f58",
+        skye: "6f2a04ca-43e0-be17-7f36-b3908627744d",
+        viper: "707eab51-4836-f488-046a-cda6cfc9485e",
+        vyse: "643448eb-42c2-9a3d-48db-87bc9969ecbd",
+        waylay: "df1cb487-4902-002e-5c17-d28e83e78588",
+        veto: "71333334-a141-4320-9c10-b18475510233",
+        yoru: "7f94d92c-4234-8836-96a9-83a379974b5a",
+        tejo: "b444168c-4e35-8076-db47-ef9bf368f384"
+  
+};
+(Hinweis: Ich habe dir hier direkt die komplette Liste von A–Z generiert, inklusive
+      
+    };
+
+    // === HAUPTFUNKTION: DATEN AUSLESEN UND ANZEIGEN ===
+    async function loadLeaderboard() {
+        // Wir laden alle Daten und sortieren standardmäßig nach den meisten Crashouts
+        const { data, error } = await supabase
+            .from('leaderboard')
+            .select('*')
+            .order('crashout', { ascending: false }); 
+
+        if (error) {
+            console.error("Fehler beim Laden:", error);
+            document.getElementById('leaderboard-list').innerHTML = "Fehler beim Laden der Daten.";
+            return;
+        }
+
+        const listDiv = document.getElementById('leaderboard-list');
+        listDiv.innerHTML = '';
+
+        if (data.length === 0) {
+            listDiv.innerHTML = "<p>Aus den Lutschen gehauennnn</p>";
+            return;
+        }
+
+        data.forEach(player => {
+            // Holt das richtige Agenten-Bild, falls nicht gefunden nimm Jett als Fallback
+            const agentUuid = agentImages[player.agent.toLowerCase()] || agentImages['jett'];
+            const imgUrl = `https://media.valorant-api.com/agents/${agentUuid}/displayicon.png`;
+
+            // Falls Beschreibungen leer (null) sind, machen wir leere Texte daraus
+            const descText = player.name_desc ? player.name_desc : "Keine Beschreibung vorhanden.";
+
+            listDiv.innerHTML += `
+                <div class="player-card">
+                    <img class="agent-icon" src="${imgUrl}" alt="${player.agent}">
+                    <div class="player-info">
+                        <div class="player-name">${player.name}</div>
+                        <div class="player-desc">${descText}</div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item">Baits: <span>${player.baits || 0}</span></div>
+                            <div class="stat-item">Toxic: <span>${player.toxic_points || 0}</span></div>
+                            <div class="stat-item">Dodges: <span>${player.dodges || 0}</span></div>
+                            <div class="stat-item">Crashouts: <span>${player.crashout || 0}</span></div>
+                            <div class="stat-item">Skins gekauft: <span>${player.skin || 0}</span></div>
+                            <div class="stat-item">Reports bekommen: <span>${player.report || 0}</span></div>
+                            <div class="stat-item">Timeouts: <span>${player.val_timeout || 0}</span></div>
+                            <div class="stat-item">We saw that 👀: <span>${player.we_saw_that || 0}</span></div>
+                            <div class="stat-item">Geknift worden 🔪: <span>${player.knife || 0}</span></div>
+                            <div class="stat-item positive">Nice Saves 🏆: <span>${player.val_nice_save || 0}</span></div>
+                        </div>
+
+                        <div class="button-group">
+                            <button onclick="updateStat(${player.id}, 'baits', ${(player.baits || 0) + 1})">+1 Bait</button>
+                            <button onclick="updateStat(${player.id}, 'toxic_points', ${(player.toxic_points || 0) + 1})">+1 Toxic</button>
+                            <button onclick="updateStat(${player.id}, 'dodges', ${(player.dodges || 0) + 1})">+1 Dodge</button>
+                            <button onclick="updateStat(${player.id}, 'crashout', ${(player.crashout || 0) + 1})">+1 Crashout</button>
+                            <button onclick="updateStat(${player.id}, 'skin', ${(player.skin || 0) + 1})">+1 Skin</button>
+                            <button onclick="updateStat(${player.id}, 'report', ${(player.report || 0) + 1})">+1 Report</button>
+                            <button onclick="updateStat(${player.id}, 'val_timeout', ${(player.val_timeout || 0) + 1})">+1 Timeout</button>
+                            <button onclick="updateStat(${player.id}, 'we_saw_that', ${(player.we_saw_that || 0) + 1})">We saw that</button>
+                            <button onclick="updateStat(${player.id}, 'knife', ${(player.knife || 0) + 1})">Geknift</button>
+                            <button class="btn-positive" onclick="updateStat(${player.id}, 'val_nice_save', ${(player.val_nice_save || 0) + 1})">+1 Nice Save</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // === FUNKTION: STATISTIK ERHÖHEN ===
+    async function updateStat(playerId, columnName, newValue) {
+        const updateData = {};
+        updateData[columnName] = newValue;
+
+        const { error } = await supabase
+            .from('leaderboard')
+            .update(updateData)
+            .eq('id', playerId);
+
+        if (error) {
+            console.error("Fehler beim Updaten:", error);
+        }
+        // Dank Realtime müssen wir hier loadLeaderboard() theoretisch nicht mal manuell aufrufen,
+        // da Supabase die Änderung unten im Listener abfängt.
+    }
+
+    // === FUNKTION: NEUEN SPIELER ERSTELLEN ===
+    async function addPlayer() {
+        const name = document.getElementById('newName').value;
+        const desc = document.getElementById('newDesc').value;
+        const agent = document.getElementById('newAgent').value;
+
+        if (!name) return alert("Bitte gib einen Namen für deinen Kumpel ein!");
+
+        const { error } = await supabase
+            .from('leaderboard')
+            .insert([{ 
+                name: name, 
+                name_desc: desc, 
+                agent: agent, 
+                baits: 0, 
+                toxic_points: 0, 
+                dodges: 0, 
+                crashout: 0, 
+                skin: 0, 
+                report: 0, 
+                val_timeout: 0, 
+                we_saw_that: 0, 
+                knife: 0, 
+                val_nice_save: 0 
+            }]);
+
+        if (error) {
+            console.error("Fehler beim Hinzufügen:", error);
+            alert("Fehler beim Speichern in der Datenbank!");
+        } else {
+            // Eingabefelder leeren
+            document.getElementById('newName').value = '';
+            document.getElementById('newDesc').value = '';
+        }
+    }
+
+    // === REALTIME MONITORING (Echtzeit-Synchronisation) ===
+    supabase
+        .channel('schema-db-changes')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'leaderboard' }, () => {
+            loadLeaderboard(); // Lädt die Liste vollautomatisch bei jedem Klick neu!
+        })
+        .subscribe();
+
+    // Initialer Start beim Laden der Website
+    loadLeaderboard();
+</script>
+
+</body>
+</html>
