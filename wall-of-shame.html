@@ -238,7 +238,12 @@
                 knife: 0, 
                 val_nice_save: 0 
             }]);
+        .select();
+        
+console.log("Inserted data:", data);
 
+    console.log("Insert error:", error);
+        
         if (error) {
             console.error("Fehler beim Hinzufügen:", error);
             alert("Fehler beim Speichern in der Datenbank!");
