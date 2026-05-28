@@ -123,6 +123,7 @@ window.addEventListener('click', (e) => {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', async () => {
+    alert('DOMContentLoaded fired');
     await loadValorantData();
 });
 
