@@ -92,7 +92,7 @@
     const SUPABASE_URL = "https://uocizgkidwlirvsedgov.supabase.co";
     const SUPABASE_KEY = "sb_publishable_CdQOGNN_uzR5qQ1bLk2f_A_MHnDCX_U";
     
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     // Zuordnung der Agenten-Namen zu den IDs der Community-API (valorant-api.com)
     const agentImages = {
@@ -131,7 +131,7 @@
     // === HAUPTFUNKTION: DATEN AUSLESEN UND ANZEIGEN ===
     async function loadLeaderboard() {
         // Wir laden alle Daten und sortieren standardmäßig nach den meisten Crashouts
-        const { data, error } = await supabase
+        const { data, error } = await supabaseCient
             .from('leaderboard')
             .select('*')
             .order('crashout', { ascending: false }); 
@@ -201,7 +201,7 @@
         const updateData = {};
         updateData[columnName] = newValue;
 
-        const { error } = await supabase
+        const { error } = await supabaseClient
             .from('leaderboard')
             .update(updateData)
             .eq('id', playerId);
@@ -221,7 +221,7 @@
 
         if (!name) return alert("Bitte gib einen Namen für deinen Kumpel ein!");
 
-        const { error } = await supabase
+        const { error } = await supabaseClient
             .from('leaderboard')
             .insert([{ 
                 name: name, 
@@ -250,7 +250,7 @@
     }
 
     // === REALTIME MONITORING (Echtzeit-Synchronisation) ===
-    supabase
+    supabaseClient
         .channel('schema-db-changes')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'leaderboard' }, () => {
             loadLeaderboard(); // Lädt die Liste vollautomatisch bei jedem Klick neu!
