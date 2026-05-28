@@ -131,7 +131,7 @@
     // === HAUPTFUNKTION: DATEN AUSLESEN UND ANZEIGEN ===
     async function loadLeaderboard() {
         // Wir laden alle Daten und sortieren standardmäßig nach den meisten Crashouts
-        const { data, error } = await supabaseCient
+        const { data, error } = await supabaseClient
             .from('leaderboard')
             .select('*')
             .order('crashout', { ascending: false }); 
