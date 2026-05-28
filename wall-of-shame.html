@@ -219,7 +219,7 @@
         const desc = document.getElementById('newDesc').value;
         const agent = document.getElementById('newAgent').value;
 
-        if (!name) return alert("Bitte gib einen Namen für deinen Kumpel ein!");
+        if (!name) return alert("Please add name");
 
         const { error } = await supabaseClient
             .from('leaderboard')
@@ -246,6 +246,7 @@
             // Eingabefelder leeren
             document.getElementById('newName').value = '';
             document.getElementById('newDesc').value = '';
+            loadLeaderboard();
         }
     }
 
