@@ -122,9 +122,9 @@ window.addEventListener('click', (e) => {
 });
 
 // Initialize
-document.addEventListener('DOMContentLoaded', async () => {
-    alert('DOMContentLoaded fired');
-    await loadValorantData();
+// Run immediately since DOM is already loaded
+alert('Running loadValorantData immediately');
+loadValorantData();
 });
 
 // Functions
