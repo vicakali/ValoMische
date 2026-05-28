@@ -716,3 +716,37 @@ main {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 }
+
+.wall-of-shame-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #ff4655;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 70, 85, 0.4);
+}
+
+.wall-of-shame-btn:hover {
+    background-color: #ffb81d;
+    color: #000;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 184, 29, 0.5);
+}
+
+@media (max-width: 768px) {
+    .wall-of-shame-btn {
+        top: 10px;
+        right: 10px;
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+}
